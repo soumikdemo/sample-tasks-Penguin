@@ -1,0 +1,41 @@
+1. List all courses.name and teachers.name.
+
+SELECT courses.name AS 'Course Name', teachers.name AS 'Teacher Name' 
+FROM courses
+INNER JOIN teachers ON teachers.id=courses.teacher_id; 
+
+
+2. List teachers who take the highest number of courses.
+
+SELECT DISTINCT teachers.name
+FROM teachers
+INNER JOIN courses ON courses.teacher_id = teachers.id
+WHERE (teachers.id) IN
+    (
+    	SELECT teacher_id
+        FROM courses 
+        GROUP BY teacher_id HAVING COUNT(teacher_id)=(
+                SELECT MAX(y.num) 
+                FROM (
+                    SELECT COUNT(teacher_id) AS num 
+                    FROM courses 
+                    GROUP BY teacher_id
+                    ORDER BY COUNT(teacher_id)
+                ) y
+            )
+    )
+
+
+3. List teachers who don't take any course.
+
+SELECT teachers.name
+FROM teachers
+WHERE NOT EXISTS(
+     SELECT * 
+     FROM courses 
+     WHERE courses.teacher_id = teachers.id
+)
+
+
+
+
