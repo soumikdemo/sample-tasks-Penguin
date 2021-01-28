@@ -11,109 +11,106 @@ courseByTeacher['Physics'] = 'Johanna Kabir'
 courseByTeacher['Chemistry'] = 'Danniel Robertson'
 courseByTeacher['Biology'] = 'Larry Cooper'
 
-dayArr = [["not created","not created","not created","not created"] for _ in range(5)]
 
 
+class School:
+    'Common base class for school'
+    userCount = 0
+    dayArr = [["not created","not created","not created","not created"] for _ in range(5)]
 
-def createRoutine(day, hClass, courseIndex):
-    courses = list(courseByTeacher.keys())
-    dayArr[day][hClass]=courses[courseIndex] 
+    def __init__(self):
+        School.userCount += 1 
+        self.main()
+
+
+    def main(self):
+        print("\nChoose from the following options: (A,B,C and M to see options again)")
+        print("A. Create Routine \nB. Show Routine \nC. List Courses with Teachers Name")
+
+        userInput = input('\nType & Enter ---------->')
+
+        if userInput == 'C':
+            self.optionC()
+        elif userInput == 'B':
+            self.optionB()
+        elif userInput == 'A':
+            self.optionA()
+        else:
+            print("Wrong input")
+
+
+    def createRoutine(self, day, hClass, courseIndex):
+        courses = list(courseByTeacher.keys())
+        self.dayArr[day][hClass]=courses[courseIndex] 
     
 
 
-def optionC():
-    for _, (key, value) in enumerate(courseByTeacher.items()):      
-        print(key+",", value) 
-    
-    userInput = input()
-    if userInput == 'M':
-        main()
-    elif userInput == 'B':
-        optionB()
-    elif userInput == 'A':
-        optionA()
-    else:
-        print("Wrong input")
+    def optionC(self):
+        for _, (key, value) in enumerate(courseByTeacher.items()):      
+            print(key+",", value) 
+        
+        userInput = input()
+        if userInput == 'M':
+            self.main()
+        elif userInput == 'B':
+            self.optionB()
+        elif userInput == 'A':
+            self.optionA()
+        else:
+            print("Wrong input")
 
 
-def optionB():
-    for x in dayArr:
-        for y in x:
-            print(dayArr.index(x), x.index(y), y)
-            #print(y) 
+    def optionB(self):
+        for x in self.dayArr:
+            for y in x:
+                print(self.dayArr.index(x), x.index(y), y)
+                #print(y) 
 
-        print("\n")
-
-
-def optionA():
-    for i, (key, _) in enumerate(courseByTeacher.items()):      
-        print(str(i)+".", key) 
-
-    print("\nTo create a routine follow the pattern: \ndayIndex(0 - 4) hourIndex(0 - 3) courseIndex\n") 
-    print("Type routine pattern. Press Ctrl-Z in new line & enter to create it.")
-    
-    contents = []
-    while True:
-        try:
-            line = input()
-        except EOFError:
-            break
-        contents.append(line)
-
-    #print(contents)
-    for x in contents:
-        indexes = x.split() 
-        day = int(indexes[0])
-        hClass = int(indexes[1])
-        course = int(indexes[2])
-
-        print(day, hClass, course)
-        createRoutine(day, hClass, course)
-    
-    main()
+            print("\n")
 
 
+    def optionA(self):
+        for i, (key, _) in enumerate(courseByTeacher.items()):      
+            print(str(i)+".", key) 
 
-def main():
-    print("\nChoose from the following options: (A,B,C and M to see options again)")
-    print("A. Create Routine \nB. Show Routine \nC. List Courses with Teachers Name")
+        print("\nTo create a routine follow the pattern: \ndayIndex(0 - 4) hourIndex(0 - 3) courseIndex\n") 
+        print("Type routine pattern. Press Ctrl-Z in new line & enter to create it.")
+        
+        contents = []
+        while True:
+            try:
+                line = input()
+            except EOFError:
+                break
+            contents.append(line)
 
-    userInput = input('\nType & Enter ---------->')
+        #print(contents)
+        for x in contents:
+            indexes = x.split() 
+            day = int(indexes[0])
+            hClass = int(indexes[1])
+            course = int(indexes[2])
 
-    if userInput == 'C':
-        optionC()
-    elif userInput == 'B':
-        optionB()
-    elif userInput == 'A':
-        optionA()
-    else:
-        print("Wrong input")
+            print(day, hClass, course)
+            self.createRoutine(day, hClass, course)
+        
+        self.main()
 
 
 
 
-class Routine:
-   'Common base class for school'
-   userCount = 0
-
-   def __init__(self, name, salary):
-      self.name = name
-      self.salary = salary
-      Routine.userCount += 1 
-
-
-#Objects created here -----------------------
-#emp1 = Employee("Zara", 2000) 
-#emp2 = Employee("Manni", 5000)
+#Objects created here -----------------------------
+obj1 = School()
+print(School.userCount) 
 
 
 
-main()
 
 
 
     
 
+## COMMENTS 
 
 #for i, (key, value) in enumerate(courseByTeacher.items()):
     #print(i, key, value)
@@ -124,10 +121,8 @@ main()
 
 # for x in range(4):
 #     innerDict[x]="not created"
-
 # for y in range(5):
 #     test[y]=innerDict
-
 
 #print(test)
 #arr = np.array(["not created","not created","not created","not created"])
